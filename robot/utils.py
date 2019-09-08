@@ -7,13 +7,16 @@ import shutil
 import re
 import time
 import hashlib
+import subprocess
 from . import constants, config
+from robot import logging
 from pydub import AudioSegment
 from pytz import timezone
+import _thread as thread
+
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from robot import logging
 
 logger = logging.getLogger(__name__)
 
@@ -109,17 +112,23 @@ def get_file_content(filePath):
     with open(filePath, 'rb') as fp:
         return fp.read()
 
-def check_and_delete(fp):
+def check_and_delete(fp, wait=0):
     """ 
     检查并删除文件/文件夹
 
     :param fp: 文件路径
     """
-    if isinstance(fp, str) and os.path.exists(fp):
-        if os.path.isfile(fp):
-            os.remove(fp)
-        else:
-            shutil.rmtree(fp)
+    def run():
+        if wait > 0:
+            time.sleep(wait)
+        if isinstance(fp, str) and os.path.exists(fp):
+            if os.path.isfile(fp):
+                os.remove(fp)
+            else:
+                shutil.rmtree(fp)
+    
+    thread.start_new_thread(run, ())
+
 
 def write_temp_file(data, suffix):
     """ 
@@ -227,4 +236,16 @@ def saveCache(voice, msg):
     """ 获取缓存的语音 """
     foo, ext = os.path.splitext(voice)
     md5 = hashlib.md5(msg.encode('utf-8')).hexdigest()
-    shutil.copyfile(voice, os.path.join(constants.TEMP_PATH, md5+ext))
+    target = os.path.join(constants.TEMP_PATH, md5+ext)
+    shutil.copyfile(voice, target)
+    return target
+    
+
+def lruCache():
+    """ 清理最近未使用的缓存 """
+    def run(*args):
+        if config.get('/lru_cache/enable', True):            
+            days = config.get('/lru_cache/days', 7)
+            subprocess.run('find . -name "*.mp3" -atime +%d -exec rm {} \;' % days, cwd=constants.TEMP_PATH, shell=True)
+
+    thread.start_new_thread(run, ())

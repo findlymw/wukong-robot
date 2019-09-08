@@ -39,6 +39,7 @@
 * [联系](#联系)
 * [感谢](#感谢)
 * [FAQ](#faq)
+* [教学视频](#教学视频)
 * [免责声明](#免责声明)
 
 ## 特性
@@ -74,12 +75,12 @@ wukong-robot 被唤醒后，用户的语音指令先经过 ASR 引擎进行 ASR 
   <img src="http://hahack-1253537070.file.myqcloud.com/images/wukong-docs/user-demo.jpg" alt="demo">
 </p>
 
-* 直接交互的视频 Demo
+* Demo视频1
   - coming soon
-  - 在视频 Demo 出来前，你可以先看看有类似交互的 [dingdang-robot 的视频 Demo](https://github.com/dingdang-robot/dingdang-robot/wiki/demo)。
+* Demo视频2：[ycy-robot 月芽特别定制版](https://www.bilibili.com/video/av50685517/)
 * 后台管理端 Demo
   - 体验地址：https://bot.hahack.com/  （体验用户名：wukong；体验密码：wukong@2019）
-  - 备选体验地址：https://bot.sxzz.moe/ （体验用户名：wukong；体验密码：wukong@2019）
+  - 月芽特别定制版体验地址：http://bot.hahack.com:4999/ （体验用户名：ycy；体验密码：ycy@2019）
 
 ## 环境要求 ##
 
@@ -171,14 +172,24 @@ wukong-robot 的后台接口是开放 Web API 的，可以使用 Restful 方式�
 
 * 对于个人用户，可以使用支付宝或者微信进行捐赠，单笔超过 20 元的捐赠者，您的 ID 将可以出现在 wukong-robot 后台管理端的捐赠页面中。
 
+ 
 | 支付宝 | 微信支付 |
 | ------ | --------- |
 | <img src="http://hahack.com/images/misc/alipay.png" height="248px" width="164px" title="支付宝" style="display:inherit;"/> | <img src="http://hahack.com/images/misc/wechatpay.jpeg" height="248px" width="164px" title="微信支付" style="display:inherit;"/> |
 
-* 对于企业用户，建议[成为这个项目的 sponsor](https://opencollective.com/wukong-robot/contribute/tier/8131-sponsor)，您将可以把一个带链接的 logo 放在 wukong-robot 后台管理端的首页、捐赠页面以及 Github 项目首页中。
+* 对于企业用户，建议[成为这个项目的 backer](https://opencollective.com/wukong-robot/contribute/tier/8131-sponsor)，您将可以把一个带链接的 logo 放在 wukong-robot 后台管理端的首页、捐赠页面以及 Github 项目首页中。
 
-<p align="center">
-  <a href="https://opencollective.com/wukong-robot/contribute/tier/8131-sponsor" target="_blank"><img src="https://opencollective.com/wukong-robot/sponsors.svg?width=890"></a>
+<p>
+  <a href="https://opencollective.com/wukong-robot/sponsor/0/website" target="_blank"><img src="https://opencollective.com/wukong-robot/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/wukong-robot/sponsor/1/website" target="_blank"><img src="https://opencollective.com/wukong-robot/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/wukong-robot/sponsor/2/website" target="_blank"><img src="https://opencollective.com/wukong-robot/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/wukong-robot/sponsor/3/website" target="_blank"><img src="https://opencollective.com/wukong-robot/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/wukong-robot/sponsor/4/website" target="_blank"><img src="https://opencollective.com/wukong-robot/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/wukong-robot/sponsor/5/website" target="_blank"><img src="https://opencollective.com/wukong-robot/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/wukong-robot/sponsor/6/website" target="_blank"><img src="https://opencollective.com/wukong-robot/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/wukong-robot/sponsor/7/website" target="_blank"><img src="https://opencollective.com/wukong-robot/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/wukong-robot/sponsor/8/website" target="_blank"><img src="https://opencollective.com/wukong-robot/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/wukong-robot/sponsor/9/website" target="_blank"><img src="https://opencollective.com/wukong-robot/sponsor/9/avatar.svg"></a>
 </p>
 
 ## 贡献
@@ -205,6 +216,17 @@ wukong-robot 的后台接口是开放 Web API 的，可以使用 Restful 方式�
 - 我能否更换成其他唤醒词，而不是叫“孙悟空”？
 
   - 能。到 [snowboy官网](http://snowboy.kitt.ai/) 训练一个自己的唤醒词，然后将生成的 pmdl 文件放到 ~/.wukong 中，然后修改配置文件中的 `hotword` 配置即可。
+  
+## 教学视频
+
+想了解全栈项目 wukong-robot 是怎么开发出来的吗？那就不能错过我们在腾讯课堂NEXT学院的视频课程。
+
+这套视频课程将从零开始，一步步教你如何使用 Python 开发出 wukong-robot 。涉及 Python 的基础语法，以及离线唤醒（KWS）、静音检测（VAD）、语音识别（ASR）、语音合成（TTS）、对话机器人等知识背景的介绍及相关sdk和服务的接入，并在这个基础上如何通过一步步的重构优化，开发出一个灵活可配置的 wukong-robot 。另外，还介绍了如何使用 tornado + twitter bootstrap + jQuery + Ajax 开发后台管理端及前端页面。进阶版中还包括了爬虫技术及 Flask 等技术的相关实战。
+
+* 基础篇：https://ke.qq.com/course/387931?tuin=1b8113f4
+* 完整篇：https://ke.qq.com/course/384790?tuin=1b8113f4
+
+> 优惠信息：加QQ群（580447290）联系小木鱼可以领取课程优惠券。
 
 ## 免责声明
 

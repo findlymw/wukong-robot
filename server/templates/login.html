@@ -3,6 +3,7 @@
 <link href="{{static_url('signin.css')}}" rel="stylesheet">
   <div class="container">
   <form action="/login" class="form-signin" method=post>
+    {% module xsrf_form_html() %}
     <center>
       <h1 class="h3 mb-3 font-weight-normal">Please login</h1>
       <label for="username" class="sr-only">User Name</label>

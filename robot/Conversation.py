@@ -25,6 +25,7 @@ class Conversation(object):
         self.isRecording = False
         self.profiling = profiling
         self.onSay = None
+        self.hasPardon = False
 
     def getHistory(self):
         return self.history
@@ -123,7 +124,7 @@ class Conversation(object):
 
     def appendHistory(self, t, text, UUID=''):
         """ 将会话历史加进历史记录 """
-        if t in (0, 1) and text != '':
+        if t in (0, 1) and text is not None and text != '':
             if text.endswith(',') or text.endswith('，'):
                 text = text[:-1]
             if UUID == '' or UUID == None or UUID == 'null':
@@ -150,17 +151,15 @@ class Conversation(object):
             self.doResponse(query)
 
     def pardon(self):
-        self.say("抱歉，刚刚没听清，能再说一遍吗？", onCompleted=lambda: self.doResponse(self.activeListen()))
+        if not self.hasPardon:
+            self.say("抱歉，刚刚没听清，能再说一遍吗？", onCompleted=lambda: self.doResponse(self.activeListen()))
+            self.hasPardon = True
+        else:
+            self.say("没听清呢")
+            self.hasPardon = False
 
     def say(self, msg, cache=False, plugin='', onCompleted=None):
         """ 说一句话 """
-        if self.onSay:
-            logger.info('onSay: {}'.format(msg))
-            if plugin != '':
-                self.onSay("[{}] {}".format(plugin, msg))
-            else:
-                self.onSay(msg)
-            self.onSay = None
         if plugin != '':
             self.appendHistory(1, "[{}] {}".format(plugin, msg))
         else:
@@ -170,20 +169,33 @@ class Conversation(object):
             logger.info("内容包含URL，所以不读出来")
             return
         voice = ''
+        cache_path = ''
         if utils.getCache(msg):
             logger.info("命中缓存，播放缓存语音")
             voice = utils.getCache(msg)
+            cache_path = utils.getCache(msg)
         else:
             try:
                 voice = self.tts.get_speech(msg)
-                if cache:
-                    utils.saveCache(voice, msg)
+                cache_path = utils.saveCache(voice, msg)
             except Exception as e:
                 logger.error('保存缓存失败：{}'.format(e))
+        if self.onSay:
+            logger.info(cache)
+            audio = 'http://{}:{}/audio/{}'.format(config.get('/server/host'), config.get('/server/port'), os.path.basename(cache_path))
+            logger.info('onSay: {}, {}'.format(msg, audio))
+            if plugin != '':
+                self.onSay("[{}] {}".format(plugin, msg), audio)
+            else:
+                self.onSay(msg, audio)
+            self.onSay = None
         if onCompleted is None:
-            onCompleted = lambda: self._onCompleted(msg)
+            onCompleted = lambda: self._onCompleted(msg)        
         self.player = Player.SoxPlayer()
         self.player.play(voice, not cache, onCompleted)
+        if not cache:
+            utils.check_and_delete(cache_path, 60) # 60秒后将自动清理不缓存的音频
+        utils.lruCache()  # 清理缓存
 
     def activeListen(self, silent=False):
         """ 主动问一个问题(适用于多轮对话) """
@@ -204,6 +216,7 @@ class Conversation(object):
                 query = self.asr.transcribe(voice)
                 utils.check_and_delete(voice)
                 return query
+            return ''
         except Exception as e:
             logger.error(e)
             return ''        

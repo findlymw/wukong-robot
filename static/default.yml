@@ -10,8 +10,13 @@ server:
     host: '0.0.0.0'  # ip 地址
     port: '5000'     # 端口号    
     username: 'wukong'  # 用户名
+    # cookie 的 secret ，用于对 cookie 的内容进行加密及防止篡改
+    # 建议使用 os.urandom(24) 生成一串随机字符串
+    # 强烈建议修改!!!
+    cookie_secret: '__GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__'
     # 密码的 md5，可以用 python3 wukong.py md5 "密码" 获得
     # 初始密码为 wukong@2019
+    # 强烈建议修改!!!
     validate: 'f4bde2a342c7c75aa276f78b26cfbd8a'
 
 # snowboy 离线唤醒
@@ -28,12 +33,17 @@ active_mode: true
 
 # 勿扰模式，该时间段内自动进入睡眠，避免监听
 do_not_bother:
-    enable: false # 开启勿扰模式
+    enable: false # true: 开启; false: 关闭
     since: 23    # 开始时间
     till: 9      # 结束时间，如果比 since 小表示第二天
     hotword_switch: false  # 是否使用唤醒词开关唤醒模式
     on_hotword: '悟空别吵.pmdl'  # 通过这个唤醒词可切换勿扰模式。默认是“悟空别吵”
     off_hotword: '悟空醒醒.pmdl'  # 通过这个唤醒词可切换勿扰模式。默认是“悟空醒醒”
+
+# 是否定期清理temp目录下的缓存音频
+lru_cache:
+    enable: true # true: 开启; false: 关闭
+    days: 7 # 清理超过多少天没有使用的文件
 
 # 语音合成服务配置
 # 可选值：
@@ -67,11 +77,11 @@ baidu_yuyin:
 # 然后将外网ip地址添加进ip白名单（外网ip查询：https://ip.51240.com/），
 # 或者使用白名单ip中转服务器
 xunfei_yuyin:
-    appid: '5c540c39'
-    asr_api_key: '859bc21e90c64d97fae77695579eb05e'  # 语音听写
+    appid: '5d45a9e9'
+    asr_api_key: 'f6a501fc4e355737ab26672e28d115f9'  # 语音听写
+    asr_api_secret: '5e004bc07f46d18805a90479f75a55cf'
     tts_api_key: '680c0eba7c1752503fa0a6ac971ce2cd'  # 在线语音合成
-    voice: 'xiaoyan'  # 全部可选：http://suo.im/51dhCS
-    url: 'http://api.musiiot.top/stt.php' # 白名单ip中转服务器（可选）
+    voice: 'xiaoyan'  # 全部可选：http://suo.im/51dhCS    
 
 # 阿里云语音
 # appKey及token需前往
@@ -131,17 +141,17 @@ email:
 
 # 拍照
 # 需接入摄像头才能使用
-# 注意：本插件只在树莓派5MP摄像头或者USB摄像头上测试过
 camera:
     enable: false
-    dest_path: "/home/pi/camera" # 保存目录
-    quality: 5              # 成像质量（0~100）
-    vertical_flip: true     # 竖直翻转
-    horizontal_flip: false  # 水平翻转
+    type: 0                 # 摄像头类型 0：usb_camera，1：树莓派 5MP 摄像头，2：Mac OSX 摄像头
+                            # 对于 Mac OSX 摄像头，请先安装 imagesnap 。例如 Mac OSX： brew install imagesnap
+    dest_path: "/Users/panweizhou/Pictures/" # 保存目录
+    quality: 5              # 成像质量（0~100），不支持 imagesnap
+    vertical_flip: true     # 竖直翻转，不支持 imagesnap
+    horizontal_flip: false  # 水平翻转，不支持 imagesnap
     count_down: 3           # 倒计时（秒），仅当开启倒计时时有效
-    sendToUser: true        # 拍完照是否发送到邮箱
     sound: true             # 是否有拍照音效
-    usb_camera: false       # 是否是 USB 摄像头
+    usb_camera: false       # 是否是 USB 摄像头（已废弃，请使用 type）
 
 ## 本地音乐插件
 LocalPlayer:

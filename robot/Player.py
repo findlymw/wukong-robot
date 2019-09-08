@@ -107,7 +107,7 @@ class SoxPlayer(AbstractSoundPlayer):
             self.onCompleteds = []
             self.proc.terminate()
             if self.delete:
-                utils.check_and_delete(self.src)
+                utils.check_and_delete(self.src)                
 
     def is_playing(self):
         return self.playing
