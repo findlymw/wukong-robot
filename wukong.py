@@ -74,7 +74,7 @@ class Wukong(object):
             如需退出，可以按 Ctrl-4 组合键
 
 '''.format(config.get('/server/host', '0.0.0.0'), config.get('/server/port', '5000')))
-        config.init()o_n
+        config.init()
         self._conversation = Conversation(self._profiling)
         self._conversation.say('{} 你好！试试对我喊唤醒词叫醒我吧'.format(config.get('first_name', '主人')), True)
         self._observer = Observer()
@@ -108,7 +108,7 @@ class Wukong(object):
             logger.info('勿扰模式打开')
 
     def _do_not_bother_off_callback(self):
-        if config.get('/dot_bother/hotword_switch', False):
+        if config.get('/do_not_bother/hotword_switch', False):
             utils.do_not_bother = False
             Player.play(constants.getData('on.wav'))
             logger.info('勿扰模式关闭')
