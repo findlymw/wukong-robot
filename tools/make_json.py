@@ -14,7 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# sys 是一个和 Python 解释器关系密切的标准库，它和帮助我们访问和 Python 解释器联系紧密的变量和函数。
 import sys
+# 一种轻量级的数据交换格式
 import json
 from robot import utils
 
