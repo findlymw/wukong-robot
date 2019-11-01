@@ -1,6 +1,6 @@
 robot_name_cn: '小一'
-first_name: '马'
-last_name: '小一'
+first_name: '小哥哥'
+last_name: '马'
 timezone: HKT
 location: '北京'
 
@@ -70,7 +70,7 @@ baidu_yuyin:
     api_key: 'UY5hD5DgwnPB9DPPVVkjGenN'
     secret_key: 'wxhyyGEpTtajKLDOuTUUBAUopTzqEkSp'
     dev_pid: 1936   # 1936: 普通话远场，1536：普通话(支持简单的英文识别)，80001：ASR极速版（请使用自己的百度语音账户再使用）
-    per: 1  # 发音人选择 0：女生；1：男生；3：度逍遥；4：度丫丫
+    per: 4  # 发音人选择 0：女生；1：男生；3：度逍遥；4：度丫丫
     lan: 'zh'
 
 
