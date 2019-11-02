@@ -5,6 +5,7 @@ import random
 from robot import logging, config, utils
 from uuid import getnode as get_mac
 from abc import ABCMeta, abstractmethod
+from . import constants
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +43,10 @@ class TulingRobot(AbstractRobot):
         # Try to get ali_yuyin config from config
         return config.get('tuling', {})
 
+
+
+
+
     def chat(self, texts):
         """
         使用图灵机器人聊天
@@ -54,6 +59,13 @@ class TulingRobot(AbstractRobot):
             url = "http://openapi.tuling123.com/openapi/api/v2"
             userid = str(get_mac())[:32]
             logger.info("userid is " + userid)
+            key = self.tuling_key
+            # 通过配置文件的singleOrCluster 0:代表single  1:代表集群 | default 0
+            #singleOrCluster = config.get('/tuling/singleOrCluster', 0)
+            #if singleOrCluster == 1:
+            #    key = constants.tulingLoadbalanceIndex()
+
+
             body = {
                 "reqType": 0,
                 "perception": {
@@ -69,7 +81,7 @@ class TulingRobot(AbstractRobot):
                     }
                 },
                 "userInfo": {
-                    "apiKey": self.tuling_key,
+                    "apiKey": key,
                     "userId": userid
                 }
             }

@@ -144,7 +144,7 @@ anyq:
 # 在配置文件中添加图灵的集群配置，图灵免费版只能创建5个robot，所以这里需要配置5个，认证后每个100/天，共500/天，够用
 # singleOrCluster: 1  # 0:代表single  1:代表集群 | default 1
 tuling:
-    singleOrCluster: 1  # 0:代表single  1:代表集群 | default 1
+    singleOrCluster: 1  # 0:代表single  1:代表集群 | default 0
     tuling_key: 'de6210f00f3b41d1bfd8e2a1e783fd07'  # 建议使用自己的图灵机器人API Key
     cluster:
       - '69a5238782bb4bc1ad7910ebeb4e177b'

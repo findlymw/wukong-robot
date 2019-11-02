@@ -74,3 +74,8 @@ def getHotwordModel(fname):
     else:
         return getConfigData(fname)
 
+
+# 用于图灵负载均衡算法的计数器
+def tulingLoadbalanceIndex(length,index):
+    nextIndex = (index + 1) % length
+    return nextIndex
