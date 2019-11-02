@@ -210,7 +210,7 @@ class Conversation(object):
             if not silent:
                 time.sleep(1)
                 Player.play(constants.getData('beep_hi.wav'))
-            listener = snowboydecoder.ActiveListener([constants.getHotwordModel(config.get('hotword', 'wukong.pmdl'))])
+            listener = snowboydecoder.ActiveListener([constants.getHotwordModel(config.get('hotword', '小一.pmdl'))])
             voice = listener.listen(
                 silent_count_threshold=config.get('silent_threshold', 15),
                 recording_timeout=config.get('recording_timeout', 5) * 4
