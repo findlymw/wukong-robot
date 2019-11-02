@@ -214,11 +214,11 @@ def is_proper_time():
 
 def get_do_not_bother_on_hotword():
     """ 打开勿扰模式唤醒词 """
-    return config.get('/do_not_bother/on_hotword', '悟空别吵.pmdl')
+    return config.get('/do_not_bother/on_hotword', '小一退下.pmdl')
 
 def get_do_not_bother_off_hotword():
     """ 关闭勿扰模式唤醒词 """
-    return config.get('/do_not_bother/off_hotword', '悟空醒醒.pmdl')
+    return config.get('/do_not_bother/off_hotword', '小一醒醒.pmdl')
 
 def getTimezone():
     """ 获取时区 """

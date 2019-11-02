@@ -51,6 +51,47 @@ class TulingRobot(AbstractRobot):
         """
         msg = ''.join(texts)
         try:
+            url = "http://openapi.tuling123.com/openapi/api/v2"
+            userid = str(get_mac())[:32]
+            logger.info("userid is " + userid)
+            body = {
+                "reqType": 0,
+                "perception": {
+                    "inputText": {
+                        "text": msg
+                    },
+                    "selfInfo": {
+                        "location": {
+                            "city": "北京",
+                            "province": "北京",
+                            "street": "北京"
+                        }
+                    }
+                },
+                "userInfo": {
+                    "apiKey": self.tuling_key,
+                    "userId": userid
+                }
+            }
+            logger.info(body)
+            r = requests.post(url, data=json.dumps(body))
+            respond = json.loads(r.text)
+            logger.info(respond)
+
+            if respond['intent']['code'] == 10004:
+                result = respond['results'][0]['values']['text']
+                logger.info('result:'+result)
+            else:
+                result = '什么情况？我居然没听懂。'
+
+            return result
+
+        except Exception:
+            logger.critical("Tuling robot failed to response for %r",
+                            msg, exc_info=True)
+            return "抱歉, 我的大脑短路了，请稍后再试试."
+        '''
+        try:
             url = "http://www.tuling123.com/openapi/api"
             userid = str(get_mac())[:32]
             body = {'key': self.tuling_key, 'info': msg, 'userid': userid}
@@ -75,7 +116,7 @@ class TulingRobot(AbstractRobot):
             logger.critical("Tuling robot failed to response for %r",
                                   msg, exc_info=True)            
             return "抱歉, 我的大脑短路了，请稍后再试试."
-
+        '''
 
 class Emotibot(AbstractRobot):
 

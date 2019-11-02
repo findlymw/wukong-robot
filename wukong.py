@@ -58,11 +58,11 @@ class Wukong(object):
 
     _profiling = False
     _dev = False
-    
+
     def init(self):
         global conversation
         self.detector = None
-        self._interrupted = False        
+        self._interrupted = False
         print('''
 ********************************************************
 *          wukong-robot - 中文语音对话机器人           *
@@ -91,7 +91,7 @@ class Wukong(object):
     def _detected_callback(self):
         def start_record():
             logger.info('开始录音')
-            self._conversation.isRecording = True;
+            self._conversation.isRecording = True
         if not utils.is_proper_time():
             logger.warning('勿扰模式开启中')
             return
@@ -138,12 +138,12 @@ class Wukong(object):
             self.detector.terminate()
         if config.get('/do_not_bother/hotword_switch', False):
             models = [
-                constants.getHotwordModel(config.get('hotword', 'wukong.pmdl')),
+                constants.getHotwordModel(config.get('hotword', '小一.pmdl')),
                 constants.getHotwordModel(utils.get_do_not_bother_on_hotword()),
                 constants.getHotwordModel(utils.get_do_not_bother_off_hotword())
             ]
         else:
-            models = constants.getHotwordModel(config.get('hotword', 'wukong.pmdl'))
+            models = constants.getHotwordModel(config.get('hotword', '小一.pmdl'))
         self.detector = snowboydecoder.HotwordDetector(models, sensitivity=config.get('sensitivity', 0.5))
         # main loop
         try:
@@ -153,13 +153,17 @@ class Wukong(object):
                              self._do_not_bother_off_callback]
             else:
                 callbacks = self._detected_callback
+            logger.info('1111111111111111')
             self.detector.start(detected_callback=callbacks,
                                 audio_recorder_callback=self._conversation.converse,
                                 interrupt_check=self._interrupt_callback,
                                 silent_count_threshold=config.get('silent_threshold', 15),
                                 recording_timeout=config.get('recording_timeout', 5) * 4,
                                 sleep_time=0.03)
+            logger.info('222222222222')
+            logger.info('离线唤醒机制-start')
             self.detector.terminate()
+            logger.info('离线唤醒机制-end')
         except Exception as e:
             logger.critical('离线唤醒机制初始化失败：{}'.format(e))
 
@@ -243,6 +247,18 @@ class Wukong(object):
         logger.info('使用测试环境')
         self._dev = True
         self.run()
+
+    # 在配置文件中添加图灵的集群配置，图灵免费版只能创建5个robot，所以这里需要配置5个，认证后每个100/天，共500/天，够用
+    def mytest(self):
+        print(config.get('/tuling/singleOrCluster'))
+        print(config.get('/tuling/tuling_key'))
+        print(config.get('/tuling/cluster'))
+        if config.get('/tuling/singleOrCluster') == 1:
+            print('current tuling robot is cluster.')
+
+
+
+
 
     def train(self, w1, w2, w3, m):
         '''

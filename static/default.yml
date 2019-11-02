@@ -1,33 +1,33 @@
-robot_name_cn: '孙悟空'
-first_name: '师父'
-last_name: '唐'
+robot_name_cn: '小一'
+first_name: '小哥哥'
+last_name: '马'
 timezone: HKT
-location: '深圳'
+location: '北京'
 
 # 后台管理端
 server:
     enable: true
     host: '0.0.0.0'  # ip 地址
-    port: '5000'     # 端口号    
-    username: 'wukong'  # 用户名
+    port: '5000'     # 端口号
+    username: 'xiaoyiadmin'  # 用户名
     # cookie 的 secret ，用于对 cookie 的内容进行加密及防止篡改
     # 建议使用 os.urandom(24) 生成一串随机字符串
     # 强烈建议修改!!!
-    cookie_secret: '__GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__'
+    cookie_secret: 'w\x99Q$]A\xa2\x8c\x84\x0b\x1d\x95\xad\xd4\xf0\xcf \x90\x04m\xbd\x91\xac\x11'
     # 密码的 md5，可以用 python3 wukong.py md5 "密码" 获得
     # 初始密码为 wukong@2019
-    # 强烈建议修改!!!
-    validate: 'f4bde2a342c7c75aa276f78b26cfbd8a'
+    # 强烈建议修改!!! 123456xykj@2019
+    validate: '5f5dcef5c4dc93a30e0b10d57712a55b'
 
 # snowboy 离线唤醒
 # https://snowboy.kitt.ai/dashboard
 # 建议到 https://snowboy.kitt.ai/hotword/32768
 # 使用相同环境录入你的语音，以提升唤醒成功率和准确率
-hotword: 'wukong.pmdl'  # 唤醒词模型，如要自定义请放到 $HOME/.wukong 目录中
-sensitivity: 0.4  # 灵敏度
+hotword: '小一.pmdl'  # 唤醒词模型，如要自定义请放到 $HOME/.wukong 目录中
+sensitivity: 0.5  # 灵敏度
 silent_threshold: 15 # 判断为静音的阈值。环境比较吵杂的地方可以适当调大
-recording_timeout: 5 # 录制的语音最大长度（秒）
-snowboy_token: your_token # 你的token，用于 train 命令训练语音
+recording_timeout: 15 # 录制的语音最大长度（秒）
+snowboy_token: 6c4e7af384ec9fedbb42c82fefe73559dfabfa0c # 你的token，用于 train 命令训练语音
 
 # 当机器人反问用户时，是否自动进入下一轮聆听
 active_mode: true
@@ -37,9 +37,9 @@ do_not_bother:
     enable: false # true: 开启; false: 关闭
     since: 23    # 开始时间
     till: 9      # 结束时间，如果比 since 小表示第二天
-    hotword_switch: false  # 是否使用唤醒词开关唤醒模式
-    on_hotword: '悟空别吵.pmdl'  # 通过这个唤醒词可切换勿扰模式。默认是“悟空别吵”
-    off_hotword: '悟空醒醒.pmdl'  # 通过这个唤醒词可切换勿扰模式。默认是“悟空醒醒”
+    hotword_switch: true  # 是否使用唤醒词开关唤醒模式
+    on_hotword: '小一退下.pmdl'  # 通过这个唤醒词可切换勿扰模式。默认是“小一退下”
+    off_hotword: '小一醒醒.pmdl'  # 通过这个唤醒词可切换勿扰模式。默认是“小一醒醒”
 
 # 是否定期清理temp目录下的缓存音频
 lru_cache:
@@ -66,11 +66,11 @@ asr_engine: baidu-asr
 # 百度语音服务
 # http://yuyin.baidu.com/
 baidu_yuyin:
-    appid: '9670645'  # 建议使用自己的百度语音账户 APPID
-    api_key: 'qg4haN8b2bGvFtCbBGqhrmZy'
-    secret_key: '585d4eccb50d306c401d7df138bb02e7'
+    appid: '17127791'  # 建议使用自己的百度语音账户 APPID
+    api_key: 'UY5hD5DgwnPB9DPPVVkjGenN'
+    secret_key: 'wxhyyGEpTtajKLDOuTUUBAUopTzqEkSp'
     dev_pid: 1936   # 1936: 普通话远场，1536：普通话(支持简单的英文识别)，80001：ASR极速版（请使用自己的百度语音账户再使用）
-    per: 1  # 发音人选择 0：女生；1：男生；3：度逍遥；4：度丫丫
+    per: 4  # 发音人选择 0：女生；1：男生；3：度逍遥；4：度丫丫
     lan: 'zh'
 
 
@@ -113,7 +113,7 @@ han-tts:
     # 需放在 ~/.wukong/ 目录下
     # 也支持自行录制，详见：
     # https://github.com/junzew/HanTTS
-    voice: 'syllables' 
+    voice: 'syllables'
 
 # NLU 引擎
 # 可选值：
@@ -125,8 +125,8 @@ nlu_engine: unit
 # anyq      - AnyQ（推荐）
 # tuling    - 图灵机器人
 # emotibot  - 小影机器人
-robot: emotibot
-
+# robot: emotibot
+robot: anyq
 # AnyQ 机器人
 anyq:
     host: 0.0.0.0
@@ -139,10 +139,18 @@ anyq:
     # 如果不想使用兜底，可以设为 null
     secondary: tuling
 
-# 图灵机器人	
+# 图灵机器人
 # http://www.tuling123.com
+# 在配置文件中添加图灵的集群配置，图灵免费版只能创建5个robot，所以这里需要配置5个，认证后每个100/天，共500/天，够用
+# singleOrCluster: 1  # 0:代表single  1:代表集群 | default 1
 tuling:
-    tuling_key: '98f95153fb5c4684a5602b909949ba61'  # 建议使用自己的图灵机器人API Key
+    singleOrCluster: 1  # 0:代表single  1:代表集群 | default 1
+    tuling_key: 'de6210f00f3b41d1bfd8e2a1e783fd07'  # 建议使用自己的图灵机器人API Key
+    cluster:
+      - '69a5238782bb4bc1ad7910ebeb4e177b'
+      - 'bf89eeffe73a4386acd9db6e948e1012'
+      - '94ced0608f514874b35275b45c23ab51'
+      - '0b6529e38d724b0fb0c122ab35e65255'
 
 # 小影机器人
 # http://botfactory.emotibot.com/
@@ -153,21 +161,21 @@ emotibot:
 # 如果使用网易邮箱，还需设置允许第三方客户端收发邮件
 email:
     enable: true
-    address: '你的邮箱地址'
-    password: '你的邮箱密码'  # 如果是网易邮箱，须填写应用授权密码而不是登录密码！
+    address: 'xiaoyikeji100@163.com'
+    password: '123456xykj'  # 如果是网易邮箱，须填写应用授权密码而不是登录密码！
     smtp_server: 'smtp.163.com'
     smtp_port: '25'  # 这里填写非SSL协议端口号
     imap_server: 'imap.163.com'
-    imap_port: '143'  # 这里填写非SSL协议端口号    
+    imap_port: '143'  # 这里填写非SSL协议端口号
     read_email_title: true  # 当有邮件时，是否朗读邮件标题
 
 # 拍照
 # 需接入摄像头才能使用
 camera:
     enable: false
-    type: 0                 # 摄像头类型 0：usb_camera，1：树莓派 5MP 摄像头，2：Mac OSX 摄像头
+    type: 2                 # 摄像头类型 0：usb_camera，1：树莓派 5MP 摄像头，2：Mac OSX 摄像头
                             # 对于 Mac OSX 摄像头，请先安装 imagesnap 。例如 Mac OSX： brew install imagesnap
-    dest_path: "/Users/panweizhou/Pictures/" # 保存目录
+    dest_path: "/Users/matianyi/.wukong/Pictures/" # 保存目录
     quality: 5              # 成像质量（0~100），不支持 imagesnap
     vertical_flip: true     # 竖直翻转，不支持 imagesnap
     horizontal_flip: false  # 水平翻转，不支持 imagesnap
@@ -177,7 +185,7 @@ camera:
 
 ## 本地音乐插件
 LocalPlayer:
-    path: "/Users/panweizhou/Music"  # 本地音乐存放路径
+    path: "/Users/matianyi/.wukong/Music"  # 本地音乐存放路径
 
 
 statistic: true # 是否开启上报

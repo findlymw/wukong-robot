@@ -15,7 +15,8 @@
 # limitations under the License.
 
 import sys
-import solr_tools
+#import solr_tools
+from . import solr_tools
 
 if sys.argv[1] == "add_engine":
     solr_tools.add_engine(sys.argv[2], sys.argv[3], sys.argv[4], 

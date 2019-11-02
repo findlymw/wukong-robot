@@ -12,7 +12,7 @@ from contextlib import contextmanager
 from robot import constants
 
 
-logger = logging.getLogger("snowboy")
+logger = logging.getLogger("小一")
 TOP_DIR = os.path.dirname(os.path.abspath(__file__))
 
 RESOURCE_FILE = os.path.join(TOP_DIR, "resources/common.res")
